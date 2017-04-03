@@ -30,3 +30,40 @@ input[type="submit"] {
 		background-color: $color-button-background-hover;
 	} // &:active, &:focus
 } // button, input[type="button"], input[type="reset"], input[type="submit"]
+
+//AJAX Post Button
+.load-previous {
+	max-width: 1100px;
+	margin-top: 3em;
+	margin-left: auto; 
+	margin-right: auto;
+	width: 100%;
+	text-align: center;
+
+	.btn-wrap {
+		padding: 2em;
+		border: 1px solid black;
+	}
+}
+/* AJAX spinner */
+@keyframes spinner {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.ajax-loader {
+	display: none;
+	margin-top: 1em;
+	text-align: center;
+	padding: .7em;
+
+	img {
+		animation: spinner .6s linear infinite;
+	}
+}
+
+
+
+
+

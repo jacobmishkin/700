@@ -31,25 +31,6 @@
 	@return ($pixelvalue / $base-context) * 1em;
 }
 
-
-//-----------------------------------------
-// PX to REM Forked from Bourbon 4 https://github.com/thoughtbot/bourbon/blob/v4-stable/app/assets/stylesheets/functions/_px-to-rem.scss
-// Usage em(12) — defaults context to 16
-// Usage em(12, 16) = same as above.
-//-----------------------------------------
-@function rem($pixelvalue, $context: $base-context) {
-
-	@if not unitless($pixelvalue) {
-		$pixelvalue: strip-units($pixelvalue);
-	}
-
-	@if not unitless($context) {
-		$base: strip-units($context);
-	}
-
-	@return ($pixelvalue / $base-context) * 1rem;
-}
-
 //-----------------------------------------
 // Unitless Line Height
 // Usage lh(12) = lh(12,12) = 1
