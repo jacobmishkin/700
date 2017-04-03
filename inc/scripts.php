@@ -71,6 +71,22 @@ function _scripts() {
 
 	// Enqueue scripts.
 	wp_enqueue_script( 'xyz-scripts', get_template_directory_uri() . '/assets/scripts/project' . $suffix . '.js', array( 'jquery' ), $version, true );
+	
+		if ( is_single() ) {
+
+			wp_enqueue_script( 'blog-post-ajax', get_template_directory_uri() . '/assets/scripts/blog-post-ajax' . $suffix . '.js', array( 'jquery' ), $version, true );
+
+			wp_localize_script( 'blog-post-ajax', 'postdata',
+				array(
+					'post_id'		=>  get_the_ID(),
+					'theme_uri'	=>	get_stylesheet_directory_uri(),
+					'rest_url'	=>	rest_url('wp/v2/'),
+					)
+			);
+		}
+			
+
+
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
@@ -79,6 +95,7 @@ function _scripts() {
 	// Enqueue the mobile nav script
 	// Since we're showing/hiding based on CSS and wp_is_mobile is wp_is_imperfect, enqueue this everywhere.
 	wp_enqueue_script( 'xyz-mobile-nav', get_template_directory_uri() . '/assets/scripts/mobile-nav-menu' . $suffix . '.js', array( 'jquery' ), $version, true );
+
 }
 add_action( 'wp_enqueue_scripts', '_scripts' );
 
