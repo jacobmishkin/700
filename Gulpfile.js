@@ -307,6 +307,7 @@ gulp.task( 'js:lint', () =>
 		'assets/scripts/*.js',
 		'!assets/scripts/project.js',
 		'!assets/scripts/blog-post-ajax.js',
+		'!assets/scripts/front-page-scroll.js',
 		'!assets/scripts/*.min.js',
 		'!Gruntfile.js',
 		'!Gulpfile.js',
