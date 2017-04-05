@@ -1,116 +1,128 @@
 /**
- * file mobile-nav-menu.js
+ * File navigation.js.
  *
- * Mobile Navigation Menu
+ * Handles toggling the navigation menu for small screens and enables TAB key
+ * navigation support for dropdown menus.
  */
-window.wdsMobileNav = {};
-( function ( window, $, app ) {
-	// Constructor
-	app.init = function () {
-		app.cache();
+/*jshint esversion: 6 */
+( function() {
+	var container, button, menu, links, subMenus, i, len;
 
-		if ( app.meetsRequirements() ) {
-			app.bindEvents();
+	container = document.getElementById( 'mobile-navigation' );
+	if ( ! container ) {
+		return;
+	}
+
+	button = container.getElementsByTagName( 'button' )[0];
+	if ( 'undefined' === typeof button ) {
+		return;
+	}
+
+	menu = container.getElementsByTagName( 'ul' )[0];
+
+	// Hide menu toggle button if menu is empty and return early.
+	if ( 'undefined' === typeof menu ) {
+		button.style.display = 'none';
+		return;
+	}
+
+	menu.setAttribute( 'aria-expanded', 'false' );
+	if ( -1 === menu.className.indexOf( 'nav-menu' ) ) {
+		menu.className += ' nav-menu';
+	}
+
+	button.onclick = function() {
+		if ( -1 !== container.className.indexOf( 'toggled' ) ) {
+			container.className = container.className.replace( ' toggled', '' );
+			button.setAttribute( 'aria-expanded', 'false' );
+			menu.setAttribute( 'aria-expanded', 'false' );
+		} else {
+			container.className += ' toggled';
+			button.setAttribute( 'aria-expanded', 'true' );
+			menu.setAttribute( 'aria-expanded', 'true' );
 		}
 	};
 
-	// Cache all the things
-	app.cache = function () {
-		app.$c = {
-			'window': $( window ),
-			'body': $( 'body' ),
-			'mobileNavMenuContainer': $( '.mobile-nav-menu' ),
-			'menuItemCount': $( '.mobile-nav-menu .mobile-nav > li' ).length
-		};
-	};
+	// Get all the link elements within the menu.
+	links    = menu.getElementsByTagName( 'a' );
+	subMenus = menu.getElementsByTagName( 'ul' );
 
-	// Combine all events
-	app.bindEvents = function () {
-		// Do nothing if there are not more than 5 links
-		if ( app.$c.menuItemCount <= 5 ) {
-			return;
+	// Set menu items with submenus to aria-haspopup="true".
+	for ( i = 0, len = subMenus.length; i < len; i++ ) {
+		subMenus[i].parentNode.setAttribute( 'aria-haspopup', 'true' );
+	}
+
+	// Each time a menu link is focused or blurred, toggle focus.
+	for ( i = 0, len = links.length; i < len; i++ ) {
+		links[i].addEventListener( 'focus', toggleFocus, true );
+		links[i].addEventListener( 'blur', toggleFocus, true );
+	}
+
+	/**
+	 * Sets or removes .focus class on an element.
+	 */
+	function toggleFocus() {
+		var self = this;
+
+		// Move up through the ancestors of the current link until we hit .nav-menu.
+		while ( -1 === self.className.indexOf( 'nav-menu' ) ) {
+
+			// On li elements toggle the class .focus.
+			if ( 'li' === self.tagName.toLowerCase() ) {
+				if ( -1 !== self.className.indexOf( 'focus' ) ) {
+					self.className = self.className.replace( ' focus', '' );
+				} else {
+					self.className += ' focus';
+				}
+			}
+
+			self = self.parentElement;
 		}
+	}
 
-		// Replace the fifth menu item with a "more" link
-		app.replaceLastMenuItem();
+	/**
+	 * Toggles `focus` class to allow submenu access on tablets.
+	 */
+	( function( container ) {
+		var touchStartFn, i,
+			parentLink = container.querySelectorAll( '.menu-item-has-children > a, .page_item_has_children > a' );
 
-		// Show more items when the "more" item is clicked
-		app.$c.body.on( 'click', '.mobile-menu-more-link', app.displayMoreItems );
+		if ( 'ontouchstart' in window ) {
+			touchStartFn = function( e ) {
+				var menuItem = this.parentNode, i;
 
-		// Add the more classes when hovering a parent menu item
-		app.$c.body.on( 'click', '.mobile-nav-menu .menu-item-has-children > a', app.setSecondClick );
+				if ( ! menuItem.classList.contains( 'focus' ) ) {
+					e.preventDefault();
+					for ( i = 0; i < menuItem.parentNode.children.length; ++i ) {
+						if ( menuItem === menuItem.parentNode.children[i] ) {
+							continue;
+						}
+						menuItem.parentNode.children[i].classList.remove( 'focus' );
+					}
+					menuItem.classList.add( 'focus' );
+				} else {
+					menuItem.classList.remove( 'focus' );
+				}
+			};
 
-		// Hide the menu when the close button is clicked
-		app.$c.body.on( 'click', '.close-mobile-menu', app.hideMoreItems );
-	};
-
-	// Do we meet the requirements?
-	app.meetsRequirements = function () {
-		return app.$c.mobileNavMenuContainer.length;
-	};
-
-	// Replace the fifth menu item with a "more" link
-	app.replaceLastMenuItem = function () {
-		// By this point, we know we have at least 5 items
-		// Add our "more" link
-		$( '.mobile-nav-menu .mobile-nav > li:nth-child(4)' ).after( '<li class="mobile-menu-more-link"><a href="#"><span><i class="more-icon"></i>More</span></a></li>' );
-
-		var boundary = $( '.mobile-nav-menu .mobile-nav > li:nth-child(6)' );
-
-		$( '<ul class="menu mobile-nav-menu-hidden">' ).insertAfter( boundary.parent() ).append( boundary.nextAll().andSelf() );
-	};
-
-	// Toggle the menu items on a click of the "more" link
-	app.displayMoreItems = function ( event ) {
-		event.preventDefault();
-
-		// Hide the menu if it's already opened
-		if ( app.$c.body.hasClass( 'mobile-menu-more' ) && !app.$c.body.hasClass( 'sub-menu-more' ) ) {
-			app.removeMenuClasses();
-			return;
+			for ( i = 0; i < parentLink.length; ++i ) {
+				parentLink[i].addEventListener( 'touchstart', touchStartFn, false );
+			}
 		}
+	}( container ) );
+} )();
 
-		// Remove any instances of classes already in place
-		// This makes sure we can click to switch between submenus
-		app.removeMenuClasses();
+jQuery(function ($) {
+	$(".menu-toggle").toggle(
+		function(){
+      $(".burger-icon").addClass('burger-icon-up');
+       $(".mobile-navigation").addClass("toggled");
 
-		app.$c.mobileNavMenuContainer.toggleClass( 'more' );
-		app.$c.body.toggleClass( 'mobile-menu-more' );
-	};
-
-	// Let the submenu parent be a normal link on the second click
-	app.setSecondClick = function ( event ) {
-		// Check to see if this parent has the visible class
-		if( !$( this ).parent( 'li' ).hasClass( 'visible' ) ) {
-			// Don't let the link fire as a normal link
-			event.preventDefault();
-		}
-
-		// Remove any instances of classes already in place
-		// This makes sure we can click to switch between submenus
-		app.removeMenuClasses();
-
-		// Toggle the class to display the submenu
-		$( this ).parent( 'li' ).toggleClass( 'visible' );
-
-		// Add our "more" classes as we do when clicking the "More" link
-		app.$c.mobileNavMenuContainer.toggleClass( 'more' );
-		app.$c.body.toggleClass( 'mobile-menu-more sub-menu-more' );
-	};
-
-	// Hide the menu items
-	app.hideMoreItems = function () {
-		app.removeMenuClasses();
-	};
-
-	app.removeMenuClasses = function () {
-		// Remove any instances of classes already in place
-		// This makes sure we can click to switch between submenus
-		app.$c.body.removeClass( 'mobile-menu-more sub-menu-more' );
-		app.$c.mobileNavMenuContainer.removeClass( 'more' );
-		$( '.menu-item-has-children' ).removeClass( 'visible' );
-	};
-
-	// Engage
-	$( app.init );
-} )( window, jQuery, window.wdsMobileNav );
+     }, function() { 
+      $(".burger-icon").removeClass('burger-icon-up');
+       $('.mobile-navigation').removeClass('toggled');
+     } 
+		);		
+});
+        
+        
