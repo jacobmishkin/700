@@ -71,6 +71,11 @@ function _scripts() {
 
 	// Enqueue scripts.
 	wp_enqueue_script( 'xyz-scripts', get_template_directory_uri() . '/assets/scripts/project' . $suffix . '.js', array( 'jquery' ), $version, true );
+
+		if ( is_front_page() ) {
+			
+			wp_enqueue_script( 'scroll-down', get_template_directory_uri() . '/assets/scripts/scroll-down' . $suffix . '.js', array( 'jquery' ), $version, true );
+		}
 	
 		if ( is_single() ) {
 

@@ -153,7 +153,7 @@ msgstr ""
 msgid "% Comments"
 msgstr ""
 
-#: inc/template-tags.php:75, template-parts/content-blog.php:34, template-parts/content-page.php:34
+#: inc/template-tags.php:75, template-parts/content-front-page.php:57, template-parts/content-page.php:34
 msgid "Edit %s"
 msgstr ""
 
@@ -189,10 +189,6 @@ msgstr ""
 msgid "Link to %s"
 msgstr ""
 
-#: template-parts/content-blog.php:22, template-parts/content-page.php:22, template-parts/content.php:37
-msgid "Pages:"
-msgstr ""
-
 #: template-parts/content-none.php:14
 msgid "Nothing Found"
 msgstr ""
@@ -207,6 +203,10 @@ msgstr ""
 
 #: template-parts/content-none.php:31
 msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr ""
+
+#: template-parts/content-page.php:22, template-parts/content.php:37
+msgid "Pages:"
 msgstr ""
 
 #: template-parts/content.php:32

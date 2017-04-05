@@ -249,6 +249,9 @@ gulp.task( 'concat', () =>
   */
 gulp.task( 'uglify', [ 'concat' ], () =>
 	gulp.src( paths.scripts )
+			.pipe( babel( {
+				presets: [ 'es2015' ]
+		} ) )
 		.pipe( rename( {'suffix': '.min'} ) )
 		.pipe( uglify( {
 			'mangle': false
@@ -307,7 +310,8 @@ gulp.task( 'js:lint', () =>
 		'assets/scripts/*.js',
 		'!assets/scripts/project.js',
 		'!assets/scripts/blog-post-ajax.js',
-		'!assets/scripts/front-page-scroll.js',
+		'!assets/scripts/mobile-nav-menu.js',
+		'!assets/scripts/scroll-down.js',
 		'!assets/scripts/*.min.js',
 		'!Gruntfile.js',
 		'!Gulpfile.js',
