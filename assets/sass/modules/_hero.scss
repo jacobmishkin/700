@@ -10,6 +10,10 @@
 	position: relative;
 	z-index: 1;
 
+	.image-as-background {
+		background-position: cover;
+	}
+
 	// Transparent overlay (optional).
 	&::after {
 		@include position(absolute, 0 0 null null);

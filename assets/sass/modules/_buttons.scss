@@ -20,15 +20,7 @@ input[type="submit"] {
 	.ie & {
 		height: rem(35);
 	} // .ie &
-
-	&:hover {
-		background-color: $color-button-background-hover;
-	} // &:hover
-
-	&:active,
-	&:focus {
-		background-color: $color-button-background-hover;
-	} // &:active, &:focus
+	
 } // button, input[type="button"], input[type="reset"], input[type="submit"]
 
 //AJAX Post Button
