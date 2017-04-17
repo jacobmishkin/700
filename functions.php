@@ -44,10 +44,10 @@ if ( ! function_exists( '_setup' ) ) :
 		 */
 		add_theme_support( 'post-thumbnails' );
 
-		// This theme uses wp_nav_menu() in one location.
+			// This theme uses wp_nav_menu() in one location.
 		register_nav_menus( array(
 			'primary' => esc_html__( 'Primary Menu', 'xyz' ),
-			'mobile'  => esc_html__( 'phone-menu', 'xyz' ),
+			'mobile'  => esc_html__( 'Optional Mobile Menu', 'xyz' ),
 		) );
 
 		/**

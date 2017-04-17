@@ -49,7 +49,7 @@ msgid "Primary Menu"
 msgstr ""
 
 #: functions.php:50
-msgid "Optional Mobile Menu"
+msgid "phone-menu"
 msgstr ""
 
 #: functions.php:107
@@ -58,10 +58,6 @@ msgstr ""
 
 #: functions.php:117
 msgid "Widget area for %s"
-msgstr ""
-
-#: header.php:26
-msgid "Skip to content"
 msgstr ""
 
 #: search.php:20

@@ -22,39 +22,8 @@
 </head>
 <body <?php body_class(); ?>>
 <div id="page" class="site">
-	<a class="skip-link screen-reader-text" href="#main"><?php esc_html_e( 'Skip to content', 'xyz' ); ?></a>
-	<nav id="mobile-navigation" class="mobile-navigation" role="navigation">
-				<?php wp_nav_menu( array( 'theme_location' => 'phone-menu', 'menu_id' => 'mobile', 'class' => 'phone') ); ?>
-			</nav><!-- #site-navigation -->
-				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( '', 'omarsamad' ); ?>
-					<svg width="75px" height="20px" viewBox="0 0 63 19">
-		    		<g id="mobile-nav" stroke-width="1">
-		    			<g class="burger-icon">
-				        <path d="M23,4 L33,4" 	id="line1" stroke="#fff" 	 stroke-linecap="square"></path>
-				        <path d="M23,16 L33,16" id="line3" stroke="#fff" 	 stroke-linecap="square"></path>
-				        <path d="M23,10 L33,10" id="line2" stroke="#fff" 	 stroke-linecap="square"></path>
-		      		</g> 
-			        <text id="leter-m"  font-size="20" font-weight="400" fill="#fff">
-			            <tspan x="0" y="17">m</tspan>
-			        </text>
-			        <text id="nu" font-size="20" font-weight="400" fill="#fff">
-			            <tspan x="39" y="17">nu</tspan>
-			        </text>
-			    	</g>
-					</svg>
-				</button>
 	<header class="site-header">
 	<section class="hero-area image-as-background" style="background-image: url(/wp-content/uploads/2017/04/hero-biz.jpg );" role="dialog" aria-labelledby="hero-title" aria-describedby="hero-description">
-	<nav id="site-navigation" class="main-navigation">
-					<?php
-						wp_nav_menu( array(
-							'theme_location' => 'primary',
-							'menu_id'        => 'primary-menu',
-							'menu_class'     => 'menu',
-						) );
-					?>
-				</nav><!-- #site-navigation -->
-		<div class="wrap">		
 				<div class="hero-content">
 					<h2 class="hero-title">Video Hero Title</h2>
 					<p class="hero-description">This is the description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Si longus, levis; An eum discere ea mavis, quae cum plane perdidiceriti nihil sciat?</p>
@@ -76,7 +45,15 @@
 					<p class="site-description"><?php echo $description; // WPCS: xss ok. ?></p>
 				<?php endif; ?>
 			</div><!-- .site-branding -->
-				
+				<nav id="site-navigation" class="main-navigation">
+				<?php
+					wp_nav_menu( array(
+						'theme_location' => 'primary',
+						'menu_id'        => 'primary-menu',
+						'menu_class'     => 'menu dropdown',
+					) );
+				?>
+			</nav><!-- #site-navigation -->
 			</div><!-- .wrap -->
 	</header><!-- .site-header -->
 	<div id="content" class="site-content">
