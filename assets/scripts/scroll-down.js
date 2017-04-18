@@ -1,4 +1,4 @@
- /*jshint esversion: 6 */
+
 
  function debounce(func, wait = 20, immediate = true) {
       var timeout;

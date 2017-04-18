@@ -41,4 +41,8 @@ h1 {
       opacity:1;
       transform:translateX(0%) scale(1);
     }
+
+    .align-right.slide-in {
+      transform:translateX(25%) scale(0.95);
+    }
   }

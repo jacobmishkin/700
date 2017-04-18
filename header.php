@@ -23,28 +23,13 @@
 <body <?php body_class(); ?>>
 <div id="page" class="site">
 	<header class="site-header">
-	<section class="hero-area image-as-background" style="background-image: url(/wp-content/uploads/2017/04/hero-biz.jpg );" role="dialog" aria-labelledby="hero-title" aria-describedby="hero-description">
+			<section class="hero-area image-as-background" style="background-image: url(/wp-content/uploads/2017/04/hero-biz.jpg );" role="dialog" aria-labelledby="hero-title" aria-describedby="hero-description">
 				<div class="hero-content">
-					<h2 class="hero-title">Video Hero Title</h2>
-					<p class="hero-description">This is the description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Si longus, levis; An eum discere ea mavis, quae cum plane perdidiceriti nihil sciat?</p>
+					<h1 class="site-title hero-title site-branding"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+					<p class="hero-description">We bring you the finest in XYZ techonology</p>
 					<a href="#" class="hero-button" title="Click to see more">Click Me</a>
 				</div><!-- .hero-content -->
 			</section><!-- .hero-area -->
-			<div class="site-branding">
-
-				<?php the_custom_logo(); ?>
-
-				<?php if ( is_front_page() && is_home() ) : ?>
-					<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-				<?php else : ?>
-					<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
-				<?php endif;
-
-				$description = get_bloginfo( 'description', 'display' ); ?>
-				<?php if ( $description || is_customize_preview() ) : ?>
-					<p class="site-description"><?php echo $description; // WPCS: xss ok. ?></p>
-				<?php endif; ?>
-			</div><!-- .site-branding -->
 				<nav id="site-navigation" class="main-navigation">
 				<?php
 					wp_nav_menu( array(
@@ -54,6 +39,5 @@
 					) );
 				?>
 			</nav><!-- #site-navigation -->
-			</div><!-- .wrap -->
 	</header><!-- .site-header -->
 	<div id="content" class="site-content">
